@@ -1,0 +1,112 @@
+<section>
+
+    <div class="container mt-5">
+        <div class="row ">
+
+
+        </div>
+        <a href="/addadress"><button type="button" class="btn btn-primary">Add new Address</button>
+        </a>
+        <div class="row">
+
+            {{#each addressData}}
+            <div class="card " style="width: 18rem;">
+
+
+                <div class="card-body ">
+                    <h5 class="card-title">{{this.firstName}}</h5>
+
+                    <h6 class="card-subtitle mb-2 text-muted">{{this.lastName}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{this.phoneNumber}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{this.pincode}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{this.address}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{this.city}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{this.state}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{this.landMark}}</h6>
+
+                    {{!-- <a href="editaddress/{{this._id}}" class="btn btn-primary" role="button"
+                        id="editmodal">Edit</a> --}}
+
+                    <a href="deleteaddress/{{this._id}}" class="btn btn-primary" role="button">Delete</a>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Edit
+                    </button>
+                </div>
+
+            </div>
+            {{/each}}
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">
+                                    first Name</label>
+                                <input id="fname" type="text" class="form-control" name="fname" value="">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">last Name
+                                    <input id="fname" type="text" class="form-control" name="lname" value="">
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Phone
+                                </label>
+                                <input id="phone" type="text" class="form-control" name="phone" value=" ">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Pin Code
+                                </label>
+                                <input id="pincode" type="text" class="form-control" name="pincode" value=" ">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Address
+                                </label>
+                                <input id="address" type="text" class="form-control" name="address" value=" ">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">City
+                                </label>
+                                <input id="city" type="text" class="form-control" name="city" value=" ">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">email</label>
+
+                                <input id="city" type="text" class="form-control" name="city" value=" ">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">State
+                                </label>
+                                <input id="state" type="text" class="form-control" name="state" value=" ">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">LandMark
+                                </label>
+                                <input id="landmark" type="text" class="form-control" name="landmark" value=" ">
+                            </div>
+
+                            ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+</div>

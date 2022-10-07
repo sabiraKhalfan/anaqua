@@ -1,0 +1,64 @@
+<div class="col-lg-8">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Full Name</p>
+                </div>
+                <div>
+                    <form action="">
+                        <div class="col-sm-9">
+                            <p class=" text-muted mb-0" style="width: 200px;">{{user.name}} </p>
+                            <input type="text" style="display:none;" id="name" value="{{user.name}}" name="name">
+
+                        </div>
+
+
+                </div>
+
+                </form>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Mobile</p>
+                </div>
+                <form action="/users/profile" method="">
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0" style="width: 200px;">{{user.phone}}</p>
+                        <input type="text" style="display:none;" id="name" value="{{user.phone}}" name="phoneNumber">
+
+                    </div>
+
+                </form>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                </div>
+                <form action="/users/profile" method="post">
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0" style="width: 200px;">{{user.email}}</p>
+                        <input type="text" style="display:none;" id="name" value="{{user.email}}" name="email">
+
+                    </div>
+                </form>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Password</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">****</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
