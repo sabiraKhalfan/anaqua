@@ -27,6 +27,7 @@ router.route('/logout')
 
 router.route('/cart')
     .get(protect, cartController.viewCart)
+    .post(cartController.addTocart)
 
 
 router.route('/shop')
@@ -36,7 +37,7 @@ router.get('/product_detail/:id', protect, userController.getProductDetail)
 
 
 // router.get('/add-to-cart/:id', cartController.getCartPage)
-router.post('/add-to-cart', protect, cartController.addTocart)
+
 
 
 // router.post('/increment', protect, cartController.increment)
@@ -66,6 +67,13 @@ router.post('/deleteaddress/:id', protect, profileController.deleteAddress)
 
 router.get('/checkout', protect, checkoutController.getcheckoutpage)
 router.post('/billingAddress', protect, checkoutController.getBillingAddres)
+router.post('/confirmOrder', protect, checkoutController.confirmOrder)
+
+
+router.get('/orderConfirmation', protect, checkoutController.getCoD)
+router.get('/vieworders', protect, checkoutController.viewallorders)
+router.post('/verifyRazorpay', protect, checkoutController.verifyPay);
+//router.get('/women', protect, productController.womenCatg)
 
 
 

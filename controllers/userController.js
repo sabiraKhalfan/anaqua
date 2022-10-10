@@ -9,7 +9,7 @@ const { syncBuiltinESMExports } = require('module')
 const { Router } = require('express')
 const twilioControler = require('./../Controllers/twilioControler')
 const userModel = require('./../model/addressModel')
-
+const categoryModel = require('./../model/adminmodels/add_category')
 // const signIntoken = id => {
 //   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })
 // }
@@ -17,9 +17,11 @@ const userModel = require('./../model/addressModel')
 exports.indexRouter = async function (req, res, next) {
   const product = await Product.find().lean()
   // console.log(product)
+  const category = await categoryModel.find().lean()
+
   userLoggedIn = req.session.loggedIn
   let username = req.session.name
-  res.render('index1', { userLoggedIn, product })
+  res.render('index1', { userLoggedIn, product, category })
 }
 
 exports.toLogin = function (req, res, next) {
@@ -90,7 +92,7 @@ exports.createUser = async (req, res) => {
 
 
   } catch (err) {
-    res.status(404).json({ status: 'fail', message: 'Somethin wrong' });
+    res.status(404).json({ status: 'fail', message: 'Something wrong' });
 
   }
 
@@ -172,10 +174,13 @@ exports.viewpage = function (req, res, next) {
   console.log(userLoggedIn, "sdfghjkl")
   res.render('otp', { userLoggedIn })
 }
+//................................................................................................//
 exports.post_Otp = function (req, res, next) {
+  console.log(req.body)
+  twilioControler.verifyOtp(req.session.phone, req.body.otp).then((response) => {
+    console.log(response)
 
-  twilioControler.verifyOtp(req.body, req.session.body).then((response) => {
-
+    console.log(req.session.phone, "sessionbody")
     if (response) {
       console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaa")
 

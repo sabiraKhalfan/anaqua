@@ -161,3 +161,6 @@ exports.deleteProduct = async function (req, res, next) {
 
 }
 //...........................................................................................................//
+exports.womenCatg = function (req, res, next) {
+
+}

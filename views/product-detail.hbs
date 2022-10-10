@@ -719,7 +719,7 @@
 		qty = parseInt(qty)
 		console.log(qty)
 		axios({
-			url: '/add-to-cart',
+			url: '/cart',
 			method: 'post',
 			data: {
 				productId: id,
@@ -738,7 +738,7 @@
 			.catch(function (error) {
 				Swal.fire({
 					title: 'Alert',
-					text: error.data.message,
+					text: "hej",
 					footer: '<a href="">Why do I have this issue?</a>'
 				})
 

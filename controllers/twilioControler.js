@@ -17,12 +17,15 @@ exports.sendOtp = async (phone) => {
 }
 
 exports.verifyOtp = async (phone, otp) => {
+    console.log("ethi", "sddddddddddddddddddddddddddddddddddddddddddd")
+
     try {
         const data = await client.verify.v2.services(ServiceSID).verificationChecks.create({
             to: `+91${phone}`,
             code: otp
         })
         return data
+
     } catch (error) {
         console.log(error)
     }

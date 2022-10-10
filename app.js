@@ -34,7 +34,7 @@ app.engine('hbs', hbs.engine({
   helpers: {
     formatString(date) {
       newdate = date.toUTCString()
-      return newdate.slice(0, 16)
+      return newdate.slice(0, 10)
     },
     inc1: function (context) {
       return context + 1

@@ -207,15 +207,15 @@
                                         </div>
                                         {{!-- Option button --}}
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios"
-                                                id="exampleRadios1" value="option1" checked>
+                                            <input class="form-check-input payment" type="radio" name="payment"
+                                                id="exampleRadios0" value="COD">
                                             <label class="form-check-label" for="exampleRadios1">
                                                 COD
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios"
-                                                id="exampleRadios2" value="option2">
+                                            <input class="form-check-input  payment" type="radio" name="payment"
+                                                id="exampleRadios1" value="Online Payment ">
                                             <label class="form-check-label" for="exampleRadios2">
                                                 Online Payment
                                             </label>
@@ -227,6 +227,8 @@
                                 </div>
                                 <!--Grid column-->
                             </div>
+                            <button id="confirmOrder" type="submit" class="btn btn-success"
+                                onclick="confirmOrder()">Confirm </button>
                         </div>
 
 
@@ -250,6 +252,9 @@
     </div>
 
 </section>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="jquery-3.6.0.min.js"></script>
+
 
 <script>
 
@@ -281,9 +286,127 @@
             })
 
             .catch(function (error) {
-                alert(error)
+
                 console.log(error)
             })
 
     }
+
+
+
+    function confirmOrder() {
+
+
+        firstName = document.getElementById("firstName").value
+        phoneNumber = document.getElementById("phoneNumber").value
+        email = document.getElementById("email").value
+        address = document.getElementById("address").value
+        lastName = document.getElementById("lastName").value
+        pincode = document.getElementById("pincode").value
+        city = document.getElementById("city").value
+        landMark = document.getElementById("landmark").value
+        state = document.getElementById("state").value
+        var paymentmethod = document.querySelector('input[name="payment"]:checked').value;
+        alert(paymentmethod)
+
+        axios({
+            url: "/confirmOrder",
+            method: "post",
+            data: {
+                firstName: firstName,
+                lastName: lastName,
+                address: address,
+                pincode: pincode,
+                email: email,
+                city: city,
+                landmark: landMark,
+                phoneNumber: phoneNumber,
+                state: state,
+                paymentmethod: paymentmethod
+
+
+            }
+        }).then(function (response) {
+
+
+            let razorpay = response.data.razorData
+
+            if (response.data.status == 'COD') {
+                location.replace("/orderConfirmation")
+            }
+            else {
+                var options = {
+                    "key": "rzp_test_kt3q2lRH2n4Wqf", // Enter the Key ID generated from the Dashboard
+                    "amount": response.data.razorData.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Acme Corp",
+                    "description": "Test Transaction",
+                    "image": "https://example.com/your_logo",
+                    "order_id": response.data.razorData.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                    "handler": function (response) {
+                        verifyPayment(response, razorpay);
+
+                    },
+                    "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+                    "prefill": {
+                        "name": "Gaurav Kumar",
+                        "email": "gaurav.kumar@example.com",
+                        "contact": "9999999999"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+
+                var rzp1 = new Razorpay(options);
+                document.getElementById('confirmOrder').onclick = function (e) {
+                    rzp1.open();
+                    e.preventDefault();
+                    rzp1.on('payment.failed', function (response) {
+                        alert(response.error.code);
+                        alert(response.error.description);
+                        alert(response.error.source);
+                        alert(response.error.step);
+                        alert(response.error.reason);
+                        alert(response.error.metadata.order_id);
+                        alert(response.error.metadata.payment_id);
+
+                    });
+
+                }
+            }
+
+
+        })
+            //location.reload()
+            .catch(function (error) {
+                console.log(error)
+            })
+
+    }
+    function verifyPayment(razorResponse, rData) {
+        console.log(rData, "razordataaaaaaaaaaaaaaa")
+        console.log('this is working');
+        axios({
+            url: '/verifyRazorpay',
+            method: 'post',
+            data: {
+                razorResponse,
+                rData
+            }
+        })
+            .then(function (response) {
+
+                if (response.status) {
+                    location.replace('/orderConfirmation');
+                }
+            })
+
+
+    }
+
+
 </script>

@@ -8,6 +8,7 @@ const { response } = require('express');
 const total = require('../controllers/cartFunctions/subTotal');
 const { request } = require('http');
 const { totalmem } = require('os');
+const { findOne } = require('../model/usermodel');
 
 exports.viewCart = async function (req, res, next) {
     let user_Id = req.session.userId;
@@ -30,71 +31,64 @@ exports.viewShop = async function (req, res, next) {
 
 exports.addTocart = async function (req, res) {
     try {
-
+        console.log(req.session);
         let user_Id = req.session.userId;
         const productId = req.body.productId;
-        const quantity = req.body.quantity
+        const oldprod = await product.findById(productId)
+        const total = (oldprod.sellingprice * req.body.quantity)
+        const oldCart = await Cart.findOne({ userId: user_Id })
 
-        const data = await product.findById(req.body.productId).lean()
-        const total = data.sellingprice * req.body.quantity
-
-        const oldCart = await Cart.findOne({ userId: user_Id }).populate('products.productId').lean()
         if (oldCart) {
-            const oldProduct = oldCart.products.find(e => e.productId._id == req.body.productId)
+            const grandTotal = oldCart.products.reduce((acc, crr) => {
+                return acc + crr.total
+            }, 0)
+            const oldProduct = oldCart.products.find(e => e.productId == productId)
+
             if (oldProduct) {
                 if (oldProduct.quantity == 1 && req.body.quantity == -1) {
-                    await Cart.updateOne({ 'product.productId': req.body.productId }, { "$pull": { 'products.productId': { '_id': oldProduct._id } } })
+                    console.log('pull');
+                    await Cart.updateOne({ 'products.productId': productId }, { "$pull": { products: { '_id': oldProduct._id } } })
                     await Cart.findByIdAndUpdate(oldCart._id, { $inc: { grandTotal: total } })
-                }
-                else {
+                } else {
 
-
-                    await Cart.updateOne({ userId: req.session.userId, "products.productId": req.body.productId }, { '$inc': { "products.$.quantity": quantity, "products.$.total": total } })
-
-
+                    const cart = await Cart.updateOne({ 'products.productId': productId }, { '$inc': { 'products.$.quantity': req.body.quantity, 'products.$.total': total } })
+                    await Cart.findByIdAndUpdate(oldCart._id, { $inc: { grandTotal: total } })
+                    console.log(cart)
                 }
 
 
             } else {
+
                 const products = {
-                    productId: req.body.productId,
+                    productId: productId,
                     quantity: req.body.quantity,
                     total: total
-
                 }
-
-                await Cart.findOneAndUpdate({ userId: user_Id }, { $push: { products } })
+                const cart = await Cart.findByIdAndUpdate(oldCart._id, { $push: { products: products }, $inc: { grandTotal: total } })
             }
-
-
-
         } else {
 
             const products = {
-                productId: req.body.productId,
+                productId: productId,
                 quantity: req.body.quantity,
-                total: total,
+                total: total
             }
 
-            const cart = new Cart({ userId: req.session.userId, products, total: total })
+            const cart = await new Cart({ userId: user_Id, products, grandTotal: total })
             cart.save()
-
+            console.log(cart)
         }
-        const newCart = await Cart.findOne({ userId: user_Id }).populate('products.productId').lean()
-        grandTotal = newCart.products.reduce((acc, curr) => {
-            acc += curr.total;
-            return acc
-        }, 0)
-        console.log(grandTotal, "qwertyuio   qwertyuioqwertyuiowerty");
-        await Cart.findOneAndUpdate({ userId: user_Id }, { grandTotal: grandTotal })
-
-        return res.status(200).json({ message: "Hurray! Product Added", newCart, grandTotal });
+        const cartData = await Cart.findOne({ userId: user_Id }).lean()
+        console.log(cartData, "gdataTotal")
+        const oldProduct = cartData.products.find(e => e.productId == productId)
+        res.json({ status: "success", productTotals: cartData.grandTotal, total: oldProduct.total })
 
     }
 
     catch (error) {
+        console.log(error)
 
-        res.status(401).json({ message: "Oops! Process failed", error: `error is : ${error}` })
+        // res.status(401).json({ message: "Oops! Process failed", error: `error is : ${error}` })
 
     }
 
@@ -102,188 +96,74 @@ exports.addTocart = async function (req, res) {
 //.................................................................................................................//
 exports.removeProduct = async function (req, res) {
     try {
-
-
-
-
         const userId = req.session.userId
 
         const productId = req.body.product
 
         console.log(productId, "productID");
 
-
+        const pullAmount = await Cart.findOne({ userId: userId, "products.productId": productId }).populate("products.productId").lean();
+        console.log(pullAmount,
+            'qwertyuioasdfghjkdfghjkghj');
+        const substractPrice = pullAmount.products[req.body.index].total;
+        newGrandTotal = pullAmount.grandTotal - substractPrice;
+        await Cart.findOneAndUpdate({ userId: userId }, { grandTotal: newGrandTotal });
         await Cart.updateOne({
             userId: userId
         }, {
             $pull: {
                 products: {
-                    productId: productId
+                    productId: productId,
+
                 }
+
             }
         })
 
+        // console.log(pullAmount, "pullAmount")
+        // if (pullAmount) {
+        //     const deletecart = await pullAmount.products.find(e => e.products == productId)
+        //     console.log(deletecart, "deletecrt")
+        //     const grandTotal = deletecart.total 
+        //     console.log(grandTotal, "grandtotal")
+        //     await Cart.findByIdAndUpdate(pullAmount._id, { $inc: { grandTotal } })
 
+        // }
+        // else {
+
+        // }
 
         return res.status(200).json({ message: 'server success' })
 
     } catch (error) {
-
         return res.status(401).json({ message: 'server failure' })
-
-
     }
-
-
-
-
-}
-//...........................................................................................................//
-exports.updateQty = async function (req, res, next) {
-
-
-    const productId = req.body.productId
-    console.log(productId)
-    let user_Id = req.session.userId;
-    console.log(req.session.userId)
-    console.log(user_Id)
-
-
-
-    const quantity = req.body.quantity
-
-    console.log(quantity, "quantity")
-
-
-
-    console.log(updateqty, "asdfghjgfdsdfghjkhgfdsdfgh")
-    await Cart.updateOne({ userId: user_Id, 'products.productId': productId }, { '$inc': { 'products.$.quantity': quantity } })
-
-
-    const cart = await Cart.findOne({ userId: user_Id, 'products.productId': productId }).populate('products.productId').lean()
-    const data = 1;
-
-    // cart.count = cart.products.length
-
-    // console.log(cart.count, "cart.count")
-
-    // cart.products.forEach(function (element) {
-    //     console.log(element)
-
-    //     if (element.productId._id == productId) {
-
-    //         productTotal = element.productId.sellingprice * element.quantity;
-    //     }
-
-    // })
-
-    //             acc += (curr.productId.price - curr.productId.discount) * curr.quantity;
-    //             return acc
-    //         })
-    //         return total;
-
-    console.log(cart, "sdfghjkl;dfghjklsfdghjkl")
-    // console.log(productTotal)
-    res.json({ message: 'success', totals: cart, productTotal })
-
-
 }
 
+//................................................................................................//
 
-            //................................................................................................................................//
-        //     exports.addTocart = async function (req, res, next) {
+// exports.removeProduct = async (req, res, next) => {
+//     try {
 
-        //         let user_Id = req.session.userId
+//         const productId = req.body.productId
+//         const userId = req.session.userId
+//         const pullAmount = await Cart.findOne({ userId: userId }).populate({ path: 'products' })
+//         console.log(pullAmount, "pullAmount")
+//         const cart = await Cart.updateOne({ userId: userId }, { $pull: { 'products.productId': { productId: req.body.productId } } })
+//         const deletecart = await pullAmount.products.find(e => e.products == productId)
+//         console.log(deletecart, "deletecart")
+//         const grandTotal = deletecart.total * -1
+//         console.log(grandTotal, "grandtotal")
+//         await Cart.findByIdAndUpdate(pullAmount._id, { $inc: { total } })
 
-        //         const data = await product.findById(req.body.productId).lean()
-        //         const total = (data.sellingprice * 1) * req.body.quantity
-
-        //         const cart = await Cart.findOne({ userId: user_Id }).populate('products.productId').lean()
-        //         console.log("cart")
-        //         if (cart) {
-
-
-        //             const data = await product.findById(req.body.productId).lean()
-        //             if (data) {
-        //                 console.log("hello")
-
-        //                 await Cart.updateOne({ userId: req.session.userId, "products.productId": req.body.productId }, { '$inc': { "products.$.quantity": 1 }, 'products.$.total': total })
-        //             }
-
-
-
-        //             else {
+//         //console.log(deletecart.price);
+//         res.json({ message: "deleted successfully" })
+//     } catch (error) {
+//         return res.status(401).json({ message: 'server failure' })
 
 
-        //                 const products = {
-        //                     productId: req.body.productId,
-        //                     quantity: req.body.quantity,
-
-
-        //                 }
-
-
-        //                 await Cart.findByIdAndUpdate({ userId: user_Id }, { $push: { products: products } })
-        //             }
-        //         } else {
-        //             const products = {
-        //                 productId: req.body.productId,
-        //                 quantity: req.body.quantity,
-        //                 total: total
-
-        //             }
-        //             const cart = new Cart({ userId: req.session.userId, products })
-        //             cart.save()
-
-        //         }
-        //         const newCart = await Cart.findOne({ userId: user_Id }).populate('products.productId').lean()
-        //         return res.status(200).json({ newCart })
-
-        //     }
-        //     //////////////ent = async function (req, res, next) {
-
-
-
-        //     try {
-        //         const userId = req.session.userId
-        //         let productId = req.body.product
-        //         let count = req.body.quantity
-        //         const products = await product.findById(productId);
-        //         console.log(products, "productssssssssssssssssssssssss")
-
-
-        //         exports.incremice = products.sellingprice
-        //         console.log(price, "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
-        //         let cart = await Cart.findOne({ userId: userId }).lean()
-        //         let total = price * count
-        //         console.log(total, total)
-        //         //increment quantity
-        //         const updateQty = await Cart.updateOne({ userId: userId, 'products.productId': productId, },
-        //             {
-        //                 'products.$.quantity': count,
-        //                 'products.$.total': total
-
-        //             })
-
-        //         res.json({
-        //             msg: 'ethi',
-        //             cart: cart,
-        //             total
-
-
-        //         })
-        //         const productData = await Cart.findOne().populate('products.productId').lean()
-
-
-
-        //     } catch (error) {
-        //         console.log('update quantity error block', error)
-        //     }
-
-        // }
-
-
-
+//     }
+// }
 
 
 
