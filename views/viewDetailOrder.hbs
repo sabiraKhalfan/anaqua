@@ -1,0 +1,206 @@
+<style>
+    .product_count {
+        display: inline-block;
+        position: relative;
+        margin-bottom: 24px;
+    }
+
+    .product_count label {
+        font-size: 14px;
+        color: #777777;
+        font-family: "Roboto", sans-serif;
+        font-weight: normal;
+        padding-right: 10px;
+    }
+
+    .product_count input {
+        width: 76px;
+        border: 1px solid #eeeeee;
+        border-radius: 3px;
+        padding-left: 10px;
+    }
+
+    .product_count button {
+        display: block;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+        cursor: pointer;
+        position: absolute;
+        right: 0px;
+        font-size: 14px;
+        color: #cccccc;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+    }
+
+    .product_count button:hover {
+        color: #222222;
+    }
+
+    .product_count .increase {
+        top: -4px;
+    }
+
+    .product_count .reduced {
+        bottom: -8px;
+    }
+</style>
+
+<!-- Shop Cart Section Begin -->
+<section class="shop-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                {{#each orderData.products}}
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 d-flex align-items-center">
+                            <img src="/multerimages/{{productId.image.[0]}}" class=" card-img">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <a href="/productDetails/{{this._id}}"
+                                    class="card-title font-weight-bold text-dark">{{this.productId.name}}</a>
+
+                                {{!-- <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in
+                                    to
+                                    additional content. This content is a little bit longer.</p> --}}
+                                <div class="">
+                                    <div class="d-flex">
+                                        <p class="card-text text-danger font-weight-bold pr-2 mb-1">₹
+                                            {{this.productId.sellingprice}}
+                                        </p>
+
+                                    </div>
+                                    <div class="d-flex">
+                                        <p class="card-text font-weight-bold pr-2 mb-1">
+                                            Qty: <span style="color: #111;">{{this.quantity}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+
+
+
+                                {{!-- <div class="cart__quantity">
+                                    <div class="pro-qty">
+                                        <input type="text" value={{this.quantity}}>
+                                    </div>
+                                </div> --}}
+
+                                <div class="d-flex">
+                                    {{!-- {{#if (delivered this.status)}}
+                                    <div>
+                                        <a href="#" onclick="returnProduct('{{this._id}}','Return Applied')"
+                                            class="card-text text-secondary pr-2" style="font-size: 13px;">Return</a>
+                                    </div>
+                                    {{/if}} --}}
+
+
+                                    {{!-- <div>
+                                        <a href="" class="card-text text-secondary" style="font-size: 13px;">Move to
+                                            Wishlist</a>
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="col-lg-6">
+                {{!-- <div class="row"> --}}
+                    {{!-- <div class="col-lg-6"> --}}
+                        {{!--
+                    </div> --}}
+                    {{!-- <div class="col-lg-4 offset-lg-2"> --}}
+
+                        <div class="cart__total__procced">
+                            <div class="">
+                                <div>
+
+                                    <p class="text-black font-weight-bold m-0">Order ID: <span style="color: #111;"
+                                            class="">{{orderData._id}}</span>
+                                    </p>
+                                    <p class="text-black font-weight-bold m-0">Order Date: <span style="color: #111;"
+                                            class="">{{orderData.createdAt}}</span>
+                                    </p>
+                                    <p class="text-black font-weight-bold m-0">Payment Method:
+                                        <span style="color: #111;" class="">{{orderData.paymentMethod}}</span>
+                                    </p>
+
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="">
+                                <div>
+                                    <p class="text-black font-weight-bold">Address: </p>
+                                    <p style="color: #111;" class="text-black font-weight-bold m-0">
+                                        {{orderData.billingAddress.firstName}}</p>
+                                    <p style="color: #111;" class="text-black font-weight-bold m-0">
+                                        {{orderData.billingAddress.phoneNumber}}</p>
+                                    <p style="color: #111;" class="text-black font-weight-bold">
+                                        {{orderData.billingAddress.address}},
+                                        {{orderData.billingAddress.pincode}},
+                                        {{orderData.billingAddress.city}}
+                                        ,
+                                        {{orderData.billingAddress.state}}
+                                        -
+
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="pt-3">
+                                <p class="text-black font-weight-bold"></p>
+                                {{#each orderData.products}}
+                                <div class="d-flex">
+                                    <div class="pr-2">
+                                        <p class="text-black font-weight-bold m-0">{{inc1 @index}}.</p>
+                                    </div>
+                                    <div class="w-75">
+                                        <p style="color: #111;" class="text-black font-weight-bold m-0">
+                                            {{this.productId.name}}</p>
+                                    </div>
+                                    <div style="width:20%" class="">
+                                        <p class="text-black font-weight-bold m-0"> x{{this.quantity}}</p>
+                                    </div>
+                                    <div style="width: 15%" class="">
+                                        <p style="color: #111;" class="text-danger font-weight-bold m-0">₹
+                                            {{this.productId.sellingprice}}</p>
+                                    </div>
+                                </div>
+                                {{/each}}
+                            </div>
+                            <hr>
+                            <ul>
+                                <li>Subtotal: <span><strong>₹ {{orderData.subTotal}}</strong></span></li>
+                                <li>Coupon Discount<span class="text-success">₹ {{orderData.discountAmount}}</span></li>
+                                <li>Total <span id="price" style="color:crimson;"><strong>₹ {{orderData.grandTotal}}</strong></span></li>
+
+                                
+                                {{!-- <li>Convenience Fee<span>$ 750.0</span></li> --}}
+
+                            </ul>
+<br>
+                        </div>
+                        <a href="/invoice/{{orderData._id}}"><button type="button" class="btn btn-danger">Invoice</button></a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="cart__btn">
+                    <a href="/products">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

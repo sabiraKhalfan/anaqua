@@ -13,12 +13,20 @@ const Wishlist = require('../model/wishlistModel')
 module.exports = {
     getwishlist: async (req, res) => {
         const userId = req.session.userId
-        wishlistDatas = await Wishlist.findOne(
-            { userId: userId }
-        ).populate("products.productId").lean()
-        console.log(wishlistDatas)
+        try {
+            wishlistDatas = await Wishlist.findOne(
+                { userId: userId }
+            ).populate("products.productId").lean()
+            console.log(wishlistDatas)
 
-        res.render('wishlist', { wishlistDatas })
+            res.render('wishlist', { wishlistDatas })
+
+        }
+        catch (error) {
+            next(createError(404));
+        }
+
+
 
     },
     addWishlist: async (req, res) => {
@@ -33,7 +41,7 @@ module.exports = {
 
 
             const wishlistItem = await Wishlist.findOne({ userId: req.session.userId }).lean()
-            console.log(wishlistItem, "wishlist item")
+
             if (wishlistItem) {
 
                 productExist = await Wishlist.findOne({ userId: req.session.userId, "products.productId": req.body.productId }).lean()
@@ -54,7 +62,6 @@ module.exports = {
 
             const wishlistDatas = await Wishlist.findOne({ userId: req.session.userId }).populate("products.productId").lean()
 
-            console.log(wishlistDatas, "data.......................")
 
 
             await Wishlist.updateOne({ userId: req.session.userId, "products.productId": req.session.userId })
@@ -62,12 +69,11 @@ module.exports = {
 
 
         } catch (error) {
-
-            return res.json({ message: 'server faiure', error: error })
-
-
-
+            next(createError(404));
         }
+
+
+
     },
     deleteWishlist: async (req, res) => {
 

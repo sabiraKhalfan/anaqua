@@ -15,12 +15,16 @@ const { findByIdAndUpdate } = require('../model/adminmodels/product');
 
 exports.getaddProduct = async function (req, res, next) {
 
-
+try{
     const categorydata = await catg.find().lean()
     res.render('admin/addProduct', { layout: "adminLayout", admin: true, categorydata })
+} catch(error){
+    next(error)
+}
+  
 }
 
-
+//........................................................................................................//
 //add a product
 
 exports.addProduct = async function (req, res, next) {
@@ -62,19 +66,30 @@ exports.addProduct = async function (req, res, next) {
 //rendering product edit page
 
 exports.geteditProduct = async function (req, res, next) {
-    let productdata = await product.find().populate('category').lean()
-    //console.log("productdata", productdata)
-    res.render('admin/view_products', { layout: "adminLayout", admin: true, productdata })
+    try{
+        let productdata = await product.find().populate('category').lean()
+   
+        res.render('admin/view_products', { layout: "adminLayout", admin: true, productdata })
+    }catch(error){
+        next(error)
+    }
+  
 }
 
 //edit product details
 
 exports.editProduct = async function (req, res, next) {
-    let id = req.params.id
-    let categories = await catg.find().lean();
-    let productdata = await product.findOne({ _id: id }).populate('category').lean()
-    //console.log("productdata", productdata)
-    res.render('admin/edit_product', { layout: "adminLayout", admin: true, productdata, categories })
+    try{
+        let id = req.params.id
+        let categories = await catg.find().lean();
+        let productdata = await product.findOne({ _id: id }).populate('category').lean()
+      
+        res.render('admin/edit_product', { layout: "adminLayout", admin: true, productdata, categories })
+    }
+    catch(error){
+        next(error)
+    }
+  
 
 }
 
@@ -86,9 +101,7 @@ exports.updateProduct = async function (req, res, next) {
 
         const files = req.files
         let imageArray = files.map(el => el.filename)
-        //console.log("image", imageArray)
-
-        //  console.log(req.body, req.params.id)
+        
         if (imageArray[0]) {
             let imageData = await product.findOne({ _id: req.params.id }).lean()
 
@@ -134,33 +147,35 @@ exports.updateProduct = async function (req, res, next) {
         res.redirect('/admin/viewProducts')
 
 
-    } catch (err) {
-
-        res.status(404).json({ status: 'fail', message: err });
-        res.redirect('/admin/dashboard')
+    } catch (error) {
+next(error)
+     
     }
 }
 //....................................................................................//
 
 exports.deleteProduct = async function (req, res, next) {
-    let imageData = await product.findOne({ _id: id }).lean()
-
-    imageData.image.map(function (el) {
-
-        fs.unlink('public/multerimages/' + imageData.image[el], (err => {
-            if (err) console.log(err);
-            else {
-                console.log("\nDeleted file: ");
-            }
-        }));
-
-    })
-    await product.findByIdAndDelete({ _id: id })
-    res.redirect('/admin/viewProducts')
+    try{
+        id = req.params.id
+        let imageData = await product.findOne({ _id: id }).lean()
+    
+        imageData.image.map(function (el) {
+    
+            fs.unlink('public/multerimages/' + imageData.image[el], (err => {
+                if (err) console.log(err);
+                else {
+                    console.log("\nDeleted file: ");
+                }
+            }));
+    
+        })
+        await product.findByIdAndDelete({ _id: id })
+        res.redirect('/admin/viewProducts')
+    }catch(error){
+        next(error)
+    }
+  
 
 
 }
 //...........................................................................................................//
-exports.womenCatg = function (req, res, next) {
-
-}

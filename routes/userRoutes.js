@@ -8,7 +8,12 @@ const { route } = require('.');
 const wishlistController = require('./../controllers/wishlistController');
 const profileController = require('./../controllers/profileController');
 const twilioControler = require('./../controllers/twilioControler')
-const checkoutController = require('./../controllers/checkoutController')
+const checkoutController = require('./../controllers/checkoutController');
+const orderController = require('./../controllers/orderController')
+const { TaskRouterGrant } = require('twilio/lib/jwt/AccessToken');
+const couponController = require("./../controllers/couponController")
+
+
 /* GET users listing. */
 
 router.get('/', userController.indexRouter);
@@ -27,11 +32,13 @@ router.route('/logout')
 
 router.route('/cart')
     .get(protect, cartController.viewCart)
+
     .post(cartController.addTocart)
 
 
 router.route('/shop')
     .get(cartController.viewShop)
+
 
 router.get('/product_detail/:id', protect, userController.getProductDetail)
 
@@ -42,6 +49,8 @@ router.get('/product_detail/:id', protect, userController.getProductDetail)
 
 // router.post('/increment', protect, cartController.increment)
 router.post('/remove-product', protect, cartController.removeProduct)
+
+
 
 // router.post('/add-To-Cart', cartController.updateQty)
 
@@ -57,8 +66,8 @@ router.post('/addAddress', protect, profileController.addaddress)
 
 
 
-router.get('/otp', protect, userController.viewpage)
-router.post('/otp', protect, userController.post_Otp)
+router.get('/otp', userController.viewpage)
+router.post('/otp', userController.post_Otp)
 
 router.get('/manageaddress', protect, profileController.getmanageaddress)
 router.post('/updatepwd', protect, profileController.updatepwd)
@@ -71,8 +80,19 @@ router.post('/confirmOrder', protect, checkoutController.confirmOrder)
 
 
 router.get('/orderConfirmation', protect, checkoutController.getCoD)
+
 router.get('/vieworders', protect, checkoutController.viewallorders)
+
+
 router.post('/verifyRazorpay', protect, checkoutController.verifyPay);
+router.get('/viewDetailOrder/:id', protect, checkoutController.viewOrderDetails)
+router.get('/cancelOrder/:id', protect, checkoutController.cancelOrder)
+
+
+router.post('/couponValidation', protect, couponController.validateCoupon);
+
+router.get('/invoice/:id',protect,orderController.getInvoice)
+
 //router.get('/women', protect, productController.womenCatg)
 
 

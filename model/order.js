@@ -6,18 +6,18 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
-    billingAddress: [
-        {
-            firstName: String,
-            lastName: String,
-            email: String,
-            phoneNumber: Number,
-            pincode: Number,
-            address: String,
-            city: String,
-            state: String,
-            landMark: String
-        }],
+    billingAddress:
+    {
+        firstName: String,
+        lastName: String,
+        email: String,
+        phoneNumber: Number,
+        pincode: Number,
+        address: String,
+        city: String,
+        state: String,
+        landMark: String
+    },
     products:
 
         [{
@@ -38,13 +38,20 @@ const orderSchema = new mongoose.Schema({
 
         }],
     grandTotal: Number,
-    orderId: String,
+
+    discountAmount: {
+        type: Number,
+        default: 0
+    },
+    subTotal:{
+        type: Number
+    },
     paymentMethod: String,
     status: String,
-    date: Date
 
 
-})
+
+}, { timestamps: true })
 
 const orderModel = mongoose.model('orders', orderSchema)
 module.exports = orderModel;

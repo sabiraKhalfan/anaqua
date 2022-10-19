@@ -5,9 +5,10 @@ const adminController = require('./../controllers/adminController')
 const categoryController = require('./../controllers/categoryController')
 const productController = require('./../controllers/productController')
 const upload = require('./../middleware/pic')
-const auth = require('./../middleware/adminProtect')
-
-
+const auth = require('./../middleware/adminProtect');
+const { authAdmin } = require('./../middleware/adminProtect');
+const orderController = require('./../controllers/orderController')
+const couponController = require("./../controllers/couponController")
 
 
 router.route('/login')
@@ -54,5 +55,37 @@ router.get('/delete_product/:id', upload.array('images', 4), productController.d
 
 
 router.get('/logout', adminController.toLogout)
+router.get('/viewOrders', auth.authAdmin, orderController.getAllOrder)
+router.get('/viewMore/:id', auth.authAdmin, orderController.viewMore)
+
+
+
+router.get('/addCoupon', auth.authAdmin, couponController.renderaddCoupon)
+router.post('/addNewCoupon', auth.authAdmin, couponController.addCoupon)
+router.route('/editCoupon/:id')
+    .get(auth.authAdmin, couponController.renderEditCoupon)
+    .post(auth.authAdmin, couponController.updateCoupon)
+
+//router.get('/editCoupon/:id', auth.authAdmin, couponController.renderEditCoupon)
+
+//router.post('/editCoupon/:id', auth.authAdmin, couponController.updateCoupon)
+
+router.get('/deleteCoupon/:id', auth.authAdmin, couponController.deleteCoupon)
+
+router.get('/editStatus/:id', auth.authAdmin, orderController.renderEditStatus)
+router.post('/editStatus/:id', auth.authAdmin, orderController.editOrderStatus)
+
+router.get('/viewCoupon', auth.authAdmin, couponController.couponData)
+router.get('/viewSalesReport',auth.authAdmin,adminController.viewSalesReport)
+
+router.use((req,res,next) => {
+    next(createError(404))
+})
+
+router.use((err,req,res,next) => {
+    console.log("admin error route handler");
+    res.status(err.status || 500);
+    res.render('adminError', {layout: false})
+})
 
 module.exports = router

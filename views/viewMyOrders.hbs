@@ -1,0 +1,59 @@
+<div class="container">
+    <table class="table  " id="product-table">
+        <thead style="background-color: #100c07; color: white;">
+            <tr>
+                <th scope="col">No</th>
+
+               
+                 
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+                <th scope="col">Payment Method</th>
+                <th></th>
+                <th></th>
+                </tr>
+        </thead>
+        <tbody>
+            {{#each orderData}}
+            <tr>
+                <td scope="row">{{inc1 @index}}</td>
+                {{!-- <td>
+                    {{#products}}
+                    <ul>
+                        <li>{{this._id}}</li>
+
+                    </ul>
+                    {{/products}}
+                </td> --}}
+                </td>
+
+                <td id="orderStatus" scope="row">{{grandTotal}}</td>
+
+                <td id="orderStatus" scope="row">{{status}}</td>
+                <td id="orderStatus" scope="row">{{paymentMethod}}</td>
+                <td scope="row">
+                    <a href="/viewDetailOrder/{{this._id}}"> <button class="btn btn-outline-danger btn-sm">View
+                            Detail</button></a>
+                </td>
+
+                {{#if this.cancelled}}
+                <td id="orderStatus" scope="row">Already cancelled</td>
+                {{else}} {{#if this.delivered}}
+                <td id="orderStatus" scope="row">Already delivered</td>
+                {{else}}
+                <td scope="row">
+
+                    <a href="/cancelOrder/{{this._id}}"> <button class="btn btn-outline-danger btn-sm">cancel
+                        </button></a>
+
+                    {{/if}}
+                    {{/if}}
+                </td>
+
+
+            </tr>
+            {{/each}}
+        </tbody>
+
+    </table>
+</div>

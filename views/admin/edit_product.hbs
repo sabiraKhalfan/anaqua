@@ -1,78 +1,88 @@
-
-
 <body>
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
-        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner"
+            class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
+
         </div>
         <!-- Spinner End -->
 
 
-         <!-- Sidebar Start -->
+        <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3>
+                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>anaqua</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
                         <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                        </div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
+                        <h6 class="mb-0">Sabira</h6>
                         <span>Admin</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="/admin/dashboard" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="/admin/dashboard" class="nav-item nav-link active"><i
+                            class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Category</a>
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>Category</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="/admin/viewCategory" class="dropdown-item">View Category</a>
                             <a href="/admin/addCategory" class="dropdown-item">Add Category</a>
-                            
+
                         </div>
                     </div>
-                    {{!-- <a href="/admin/products" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a> --}}
+                    {{!-- <a href="/admin/products" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
+                    --}}
                     <div class="nav-item dropdown">
-                       <div class="navbar-nav w-100">
-                    
-                    <div class="nav-item dropdown">
-                        <a href="/admin/addProducts" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Products</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="/admin/viewProducts" class="dropdown-item">View Products</a>
-                            <a href="/admin/addProducts" class="dropdown-item">Add products</a>
-                            {{!-- <a href="element.html" class="dropdown-item">Other Elements</a> --}}
+                        <div class="navbar-nav w-100">
+
+                            <div class="nav-item dropdown">
+                                <a href="/admin/addProducts" class="nav-link dropdown-toggle"
+                                    data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Products</a>
+                                <div class="dropdown-menu bg-transparent border-0">
+                                    <a href="/admin/viewProducts" class="dropdown-item">View Products</a>
+                                    <a href="/admin/addProducts" class="dropdown-item">Add products</a>
+                                    {{!-- <a href="element.html" class="dropdown-item">Other Elements</a> --}}
+                                </div>
+                            </div> {{!-- <a href="#" class="nav-link dropdown-toggle active"
+                                data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a> --}}
                         </div>
-                    </div> {{!-- <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a> --}}
+                        <div class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                    class="fa fa-laptop me-2"></i>Users</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="/admin/users" class="dropdown-item">View Users</a>
+                                {{!-- <a href="/admin/addCategory" class="dropdown-item">Add Category</a> --}}
+
+                            </div>
+                        </div>
+                        {{!-- <a href="/admin/charts" class="nav-item nav-link"><i
+                                class="fa fa-chart-bar me-2"></i>Charts</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                    class="far fa-file-alt me-2"></i>Pages</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="signin.html" class="dropdown-item">Sign In</a>
+                                <a href="signup.html" class="dropdown-item">Sign Up</a>
+                                <a href="404.html" class="dropdown-item">404 Error</a>
+                                <a href="blank.html" class="dropdown-item">Blank Page</a>
+                            </div>
+                        </div> --}}
                     </div>
-                       <div class="nav-item dropdown">
-                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Users</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="/admin/users" class="dropdown-item">View Users</a>
-                     {{!-- <a href="/admin/addCategory" class="dropdown-item">Add Category</a> --}}
-                            
-                        </div>
-                    </div>
-                    {{!-- <a href="/admin/charts" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
-                        </div>
-                    </div> --}}
-                </div>
             </nav>
         </div>
         <!-- Sidebar End -->
-        
+
 
         <!-- Content Start -->
         <div class="content">
@@ -96,7 +106,8 @@
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -106,7 +117,8 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -116,7 +128,8 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -153,8 +166,9 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">Sabira</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
@@ -166,77 +180,87 @@
             </nav>
             <!-- Navbar End -->
             <!-- Form Start -->
-          
-           <div class="container-fluid pt-4 px-4">
+
+            <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-12">
                         <div class="bg-secondary rounded h-100 p-4">
                             <h6 class="mb-4">Edit Product</h6>
                             {{!-- encoding type is must --}}
-                            <form method="post" action= "" enctype="multipart/form-data"action ='/admin/edit_product/:id'>
+                            <form method="post" action="" enctype="multipart/form-data"
+                                action='/admin/edit_product/:id'>
                                 <div class="mb-3">
-                                    <label  class="form-label">Product Name</label>
-                                    <input name="name" type="text" class="form-control" id="name"
+                                    <label class="form-label">Product Name</label>
+                                    <input name="name" type="text" required class="form-control" id="name"
                                         aria-describedby="emailHelp" value="{{productdata.name}}">
-                                       
-                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+
+                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone
+                                        else.
                                     </div> --}}
                                 </div>
                                 <div class="mb-3">
-                                <label  class="form-label">Choose a Category</label>
-                                   
-                                
-                                <select class="form-select"  name="category" aria-label="Default select example">
-                                <option value="{{productdata.category._id}}" selected>{{productdata.category.name}}</option>
-                                {{#each categories}}
-                                <option value="{{this._id}}">{{this.name}}</option>
-                                
-                                {{/each}}
-                            </select>
-                            </div>
-                                <div class="mb-3">
-                                    <label  class="form-label">Product Description</label>
-                                    <input name="description" type="text" class="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" value="{{productdata.description}}">
-                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
-                                    </div> --}}
+                                    <label class="form-label">Choose a Category</label>
+
+
+                                    <select class="form-select" name="category" aria-label="Default select example">
+                                        <option value="{{productdata.category._id}}" selected>
+                                            {{productdata.category.name}}</option>
+                                        {{#each categories}}
+                                        <option value="{{this._id}}">{{this.name}}</option>
+
+                                        {{/each}}
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label  class="form-label">Product Quantity</label>
-                                    <input name="quantity" type="number" class="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" value="{{productdata.quantity}}">
-                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                                    <label class="form-label">Product Description</label>
+                                    <input name="description" required type="text" class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp"
+                                        value="{{productdata.description}}">
+                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone
+                                        else.
                                     </div> --}}
                                 </div>
-                                 <div class="mb-3">
-                                    <label  class="form-label">Product Amount</label>
-                                    <input name="price" type="text" class="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" value="{{productdata.price}}">
-                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                                <div class="mb-3">
+                                    <label class="form-label">Product Quantity</label>
+                                    <input name="quantity" type="number" required class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp"
+                                        value="{{productdata.quantity}}">
+                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone
+                                        else.
                                     </div> --}}
                                 </div>
-                                 <div class="mb-3">
-                                    <label  class="form-label">Discount</label>
-                                    <input name="discount" type="text" class="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp"value="{{productdata.discount}}">
-                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                                <div class="mb-3">
+                                    <label class="form-label">Product Amount</label>
+                                    <input name="price" type="text" required class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp"
+                                        value="{{productdata.price}}">
+                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone
+                                        else.
                                     </div> --}}
                                 </div>
-                                 <div class="mb-3">
-                                        {{!-- here we have to specify type="file" for uploading data  --}}
-                                <label for="formFileMultiple" class="form-label">Product Images</label>
-                                <input name="images" class="form-control bg-dark" type="file" id="formFileMultiple" multiple>
-                            </div>
-                            
-                                
+                                <div class="mb-3">
+                                    <label class="form-label">Selling Price</label>
+                                    <input name="discount" required type="text" class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp"
+                                        value="{{productdata.sellingprice}}">
+                                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone
+                                        else.
+                                    </div> --}}
+                                </div>
+                                <div class="mb-3">
+                                    {{!-- here we have to specify type="file" for uploading data --}}
+                                    <label for="formFileMultiple" class="form-label">Product Images</label>
+                                    <input name="images" class="form-control bg-dark" type="file" id="formFileMultiple"
+                                        multiple>
+                                </div>
+
+
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </form>
                         </div>
                     </div>
-                                
+
                     <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </div>
-
-    
-
+                    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+                            class="bi bi-arrow-up"></i></a>
+                </div>

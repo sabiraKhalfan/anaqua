@@ -5,14 +5,19 @@ const addressModel = require('./../model/addressModel')
 
 
 exports.getuserProfile = async function (req, res, next) {
+    try{
+        const userId = req.session.userId
 
-    const userId = req.session.userId
+        const user = await User.findOne({ _id: req.session.userId }).lean()
+        const addressData = await addressModel.findOne({ userId: userId }).lean()
+        res.render("userProfile", { userLoggedIn, user, addressData })
+    
+        console.log(addressData, "this is address data")
+    }catch(error){
+        next(error)
+    }
 
-    const user = await User.findOne({ _id: req.session.userId }).lean()
-    const addressData = await addressModel.findOne({ userId: userId }).lean()
-    res.render("userProfile", { userLoggedIn, user, addressData })
-
-    console.log(addressData, "this is address data")
+    
 }
 ///.....................................................................................................//
 
@@ -41,12 +46,17 @@ exports.updateProfile = async function (req, res, next) {
 }
 //............................................................................................................//
 exports.getaddaddress = async function (req, res, next) {
-    let userId = req.session.userId
-    const userData = await User.findOne({ _id: userId }).lean()
-    let addressData = await addressModel.find({ userId: userId._id }).lean()
-
-    res.render('addaddress', { userLoggedIn, userData, addressData })
-
+    try{
+        let userId = req.session.userId
+        const userData = await User.findOne({ _id: userId }).lean()
+        let addressData = await addressModel.find({ userId: userId._id }).lean()
+    
+        res.render('addaddress', { userLoggedIn, userData, addressData })
+    
+    }catch(error){
+        next(error)
+    }
+  
 }
 //.............................................................................................................
 exports.updatepwd = async function (req, res, next) {
@@ -77,41 +87,53 @@ exports.updatepwd = async function (req, res, next) {
 }
 //....................................................................................................//
 exports.addaddress = async function (req, res, next) {
-    console.log("this is the body of the add address");
-    console.log(req.body);
+   try{
     const userId = req.session.userId
-    //console.log("this is the uesr id of the user that is logged in  now");
-    //console.log(userId);
+   
     req.body.userId = userId
     await addressModel.create(req.body);
 
     res.redirect("/profile")
+   }catch(error){
+    next(error)
+   }
+
 }
 //...................................................................................................//
 exports.editAddress = async function (req, res, next) {
-    console.log("this is body,:", req.body)
+   
     let userId = req.session.userId
     let addressId = req.params.id
-    console.log(addressId);
+   try{
+
+   
     await addressModel.findOneAndUpdate({ _id: addressId }, { $set: { "firstName": req.body.firstName, "lastName": req.body.lastName, "email": req.body.email, "phoneNumber": req.body.phoneNumber, "address": req.body.address, "city": req.body.city, "state": req.body.state, "landmark": req.body.landmark } })
     res.redirect('/profile')
+}catch(error){
+    next(error)
+}
 }
 //...........................................................................................//
 exports.getmanageaddress = async function (req, res, next) {
-    let userId = req.session.userId
-    let addressData = await addressModel.find({ userId: userId }).lean()
-    console.log(addressData, "address data")
-    res.render('manageaddress', { userLoggedIn, addressData })
+    try{
+        let userId = req.session.userId
+        let addressData = await addressModel.find({ userId: userId }).lean()
+        
+        res.render('manageaddress', { userLoggedIn, addressData })
+    }catch(error){
+        next(error)
+    }
+  
 }
 //...............................................................................................//
 exports.deleteAddress = async function (req, res, next) {
-
-    console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-
-
-    console.log("delete address", deleteId)
+try{
     await addressModel.findOneAndDelete({ _id: deleteId })
     res.redirect('/profile')
+}catch(error){
+    next(error)
+}
+   
 
 }
-
+//.............................................................................................//

@@ -34,7 +34,7 @@ app.engine('hbs', hbs.engine({
   helpers: {
     formatString(date) {
       newdate = date.toUTCString()
-      return newdate.slice(0, 10)
+      return newdate.slice(0, 16)
     },
     inc1: function (context) {
       return context + 1
@@ -64,15 +64,12 @@ app.use(session({
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log('DB Connection Succesful'));
 
-// app.use(function (req, res, next) {
-//   res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-//   next();
-// });
+
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
 
-//app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -87,13 +84,10 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+
+   res.render('error', { layout: false });
+  
 });
-
-
-
-
-
 
 //console.log(process.env)
 const port = 5000;

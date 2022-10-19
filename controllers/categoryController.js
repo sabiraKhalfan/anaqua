@@ -12,8 +12,15 @@ const console = require('console');
 //rendering add category page
 
 exports.getaddCategory = function (req, res, next) {
-    res.render('admin/addCategory', { layout: "adminLayout", admin: true })
+    try{
+        res.render('admin/addCategory', { layout: "adminLayout", admin: true })
+    }
+    catch(error){
+        next(error)
+    }
+    
 }
+//................................................................................//
 //adding a new category
 exports.addCategory = (req, res) => {
     try {
@@ -25,9 +32,8 @@ exports.addCategory = (req, res) => {
 
             res.res.redirect('/admin/viewCategory')
 
-    } catch (err) {
-        res.send(err)
-        res.redirect('/admin/dashboard')
+    } catch (error) {
+        next(error)
     }
 }
 
@@ -38,8 +44,8 @@ exports.getAdminCategory = async (req, res, next) => {
 
         res.render('admin/viewcategory', { layout: "adminLayout", admin: true, data })
     }
-    catch (err) {
-        res.send(err)
+    catch (error) {
+        next(error)
     }
 
 }
@@ -51,23 +57,26 @@ exports.DeleteCategory = async (req, res) => {
         res.redirect('/admin/viewCategory')
         console.log(req.params.id)
     }
-    catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
+    catch (error) {
+        next(error)
+        
     }
 }
 //-----------------------------------------------------------------------------------------//
 
 //rendering edit category
 exports.geteditCategory = async (req, res, next) => {
-    let id = req.params.id;
-    let data = await catg.findOne({ _id: id }).lean();
-    console.log("data", data)
-    res.render('admin/edit_category', { layout: "adminLayout", admin: true, data })
+    try{
+        let id = req.params.id;
+        let data = await catg.findOne({ _id: id }).lean();
+        console.log("data", data)
+        res.render('admin/edit_category', { layout: "adminLayout", admin: true, data })
+    }
+    catch(error){
+        next(error)
+    }
 }
-
+//.......................................................................................//
 //edit a category
 exports.editCategory = async (req, res) => {
     try {
@@ -76,8 +85,8 @@ exports.editCategory = async (req, res) => {
         console.log(req.body)
         const updateObject = await catg.findByIdAndUpdate(req.params.id, req.body);
         res.redirect('/admin/viewCategory')
-    } catch (err) {
-        res.status(404).json({ status: 'fail', message: err });
+    } catch (error) {
+       next(error)
     }
 }
 

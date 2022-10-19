@@ -1,27 +1,26 @@
-const express = require('express')
+
 const User = require('./../model/usermodel')
 
 const Product = require('../model/adminmodels/product')
-
-const process = require('process')
-const { fail } = require('assert')
-const { syncBuiltinESMExports } = require('module')
-const { Router } = require('express')
+const Cart = require('./../model/cartModel')
+const Wishlist = require('./../model/wishlistModel')
 const twilioControler = require('./../Controllers/twilioControler')
-const userModel = require('./../model/addressModel')
 const categoryModel = require('./../model/adminmodels/add_category')
-// const signIntoken = id => {
-//   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })
-// }
+
+
 
 exports.indexRouter = async function (req, res, next) {
-  const product = await Product.find().lean()
-  // console.log(product)
+  const userId = req.session.userId
+  const product = await Product.find().populate('category').lean()
+  //console.log(product)
   const category = await categoryModel.find().lean()
+  const cart = await Cart.findOne({ userId: userId }).populate('products.productId').lean()
+
+  const wishlist = await Wishlist.findOne({ userId: userId }).populate('products.productId').lean()
 
   userLoggedIn = req.session.loggedIn
   let username = req.session.name
-  res.render('index1', { userLoggedIn, product, category })
+  res.render('index1', { userLoggedIn, product, category, cart, wishlist })
 }
 
 exports.toLogin = function (req, res, next) {
@@ -79,7 +78,7 @@ exports.createUser = async (req, res) => {
       newUser.save()
       // console.log(newUser)
       req.session.userId = newUser._id
-      req.session.loggedIn = true;
+    
       req.session.phone = req.body.phone
 
       twilioControler.sendOtp(req.body.phone)
@@ -91,13 +90,14 @@ exports.createUser = async (req, res) => {
     }
 
 
-  } catch (err) {
-    res.status(404).json({ status: 'fail', message: 'Something wrong' });
-
+  } catch (error) {
+    next(createError(404));
   }
 
-
 }
+
+
+
 
 
 
@@ -137,21 +137,19 @@ exports.signin = async (req, res) => {
     } res.send('You Are Blocked')
 
   }
-  catch (err) {
-    return res.status(401).json({
-      status: 'fail',
-      message: err,
-    })
+  catch (error) {
+   next(error)
+    }
 
   }
 
-}
+
 //.....................................................................................................//
 //get product details
 exports.getProductDetail = async function (req, res, next) {
 
 
-
+try{
   id = req.params.id
 
   const productdetail =
@@ -161,6 +159,10 @@ exports.getProductDetail = async function (req, res, next) {
 
 
   res.render('product-detail', { productdetail })
+} catch(error){
+  next(error)
+}
+  
 }
 
 
@@ -170,28 +172,37 @@ exports.getProductDetail = async function (req, res, next) {
 
 
 exports.viewpage = function (req, res, next) {
-  let userLoggedIn = req.session.loggedIn
-  console.log(userLoggedIn, "sdfghjkl")
-  res.render('otp', { userLoggedIn })
+  try{
+    let userLoggedIn = req.session.loggedIn
+
+    res.render('otp', { userLoggedIn })
+  }catch(error){
+    next(error)
+  }
+  
 }
 //................................................................................................//
-exports.post_Otp = function (req, res, next) {
-  console.log(req.body)
-  twilioControler.verifyOtp(req.session.phone, req.body.otp).then((response) => {
-    console.log(response)
-
-    console.log(req.session.phone, "sessionbody")
-    if (response) {
-      console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaa")
-
-      User.findOneAndUpdate({ _id: req.session.userId }, { $set: { otpVerified: true } })
-      res.redirect('/login')
-    }
-    else {
-      res.redirect('/signup')
-    }
-
-  })
+exports.post_Otp =  async function (req, res, next) {
+  try{
+    const data = await twilioControler.verifyOtp(req.session.phone, req.body.otp)
+  
+  if(data?.valid){
+    await User.findOneAndUpdate({ _id: req.session.userId }, { $set: { otpVerified: true } })
+    req.session.loggedIn = true;
+    res.redirect('/login')
+    
+  }
+        
+        
+      
+      else {
+        res.redirect('/otp')
+      }
+  
+    
+  }catch(error){
+    next(error)
+  }
 
 
 }
