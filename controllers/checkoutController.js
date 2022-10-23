@@ -82,7 +82,7 @@ exports.confirmOrder = async function (req, res, next) {
             const newOrder = await new orderModel({ userId, billingAddress, products, grandTotal, discountAmount,subTotal,paymentMethod, status: 'placed' });
             newOrder.save()
              await Cart.findOneAndDelete({ userId: req.session.userId })
-            console.log(process.env.RAZOR_PAY_ID, process.env.RAZOR_PAY_SECRET_KEY)
+           // console.log(process.env.RAZOR_PAY_ID, process.env.RAZOR_PAY_SECRET_KEY)
             var instance = new Razorpay({
                 key_id: process.env.RAZOR_PAY_ID,
                 key_secret: process.env.RAZOR_PAY_SECRET_KEY,
@@ -122,8 +122,8 @@ exports.verifyPay = async function (req, res, next) {
         const expectedSignature = crypto.createHmac('sha256', process.env.RAZOR_PAY_SECRET_KEY)
             .update(body.toString())
             .digest('hex');
-        console.log("sig received ", req.body.response.razorpay_signature);
-        console.log("sig generated ", expectedSignature);
+        //console.log("sig received ", req.body.response.razorpay_signature);
+       // console.log("sig generated ", expectedSignature);
         var response = { "signatureIsValid": "false" }
         if (expectedSignature === req.body.response.razorpay_signature) {
             response = { "signatureIsValid": "true" }
@@ -182,7 +182,7 @@ exports.viewOrderDetails = async function (req, res, next) {
    
         orderData = await orderModel.findOne({ _id: orderId }).populate('products.productId').lean()
       
-    console.log(orderData,"orderDataaaaaaaaaaaaaaaaaaa")
+   // console.log(orderData,"orderDataaaaaaaaaaaaaaaaaaa")
         res.render('viewDetailOrder', { userLoggedIn, orderData })
     } catch(error)
     {

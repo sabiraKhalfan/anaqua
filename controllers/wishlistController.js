@@ -14,16 +14,14 @@ module.exports = {
     getwishlist: async (req, res) => {
         const userId = req.session.userId
         try {
-            wishlistDatas = await Wishlist.findOne(
-                { userId: userId }
-            ).populate("products.productId").lean()
-            console.log(wishlistDatas)
+            wishlistDatas = await Wishlist.find({ userId: userId }).populate('products.productId').lean()
+            console.log( wishlistDatas,"wisglistsatassssssssssssssss")
 
-            res.render('wishlist', { wishlistDatas })
+            res.render('wishlist', { wishlistDatas})
 
         }
         catch (error) {
-            next(createError(404));
+            next(error);
         }
 
 
@@ -60,16 +58,15 @@ module.exports = {
                 await Wishlist.create({ userId: req.session.userId, products: { productId: req.body.productId } })
             }
 
-            const wishlistDatas = await Wishlist.findOne({ userId: req.session.userId }).populate("products.productId").lean()
-
-
+           
 
             await Wishlist.updateOne({ userId: req.session.userId, "products.productId": req.session.userId })
-            return res.json({ message: 'Item is added to Wishlist' })
+          
+            return res.json({ message: 'Item is added to Wishlist'})
 
 
         } catch (error) {
-            next(createError(404));
+            console.log(error)
         }
 
 

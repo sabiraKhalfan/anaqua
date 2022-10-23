@@ -1,5 +1,5 @@
 <!-- breadcrumb -->
-<div class="container">
+{{!-- <div class="container">
     <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
         <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
             Home
@@ -10,7 +10,7 @@
             Shoping Cart
         </span>
     </div>
-</div>
+</div> --}}
 
 
 <!-- Shoping Cart -->
@@ -29,7 +29,7 @@
                                 <th></th>
                                 <th class="colum-5">Delete</th>
                             </tr>
-                            {{#each wishlistDatas.products}}
+                            {{#each wishlistDatas.[0].products}}
                             <tr class="table_row">
                                 <td class="column-1">
                                     <div class="how-itemcart1">
@@ -67,7 +67,7 @@
 
                     </div>
 
-                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                    {{!-- <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                         <div class="flex-w flex-m m-r-20 m-tb-5">
                             <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
                                 name="coupon">
@@ -82,7 +82,7 @@
                             class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
 
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -111,10 +111,10 @@
                             </span>
                         </div>
                     </div>
-
+{{!-- 
                     <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                         Checkout
-                    </button>
+                    </button> --}}
                     <br>
                 </div>
             </div>

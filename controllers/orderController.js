@@ -29,7 +29,7 @@ exports.renderEditStatus = async function (req, res, next) {
     orderId = req.params.id
 try{
     orderData = await orderModel.findOne({ _id: orderId }).lean()
-    console.log(orderData.status)
+   // console.log(orderData.status)
     let placed, shipped, delivered
     if (orderData.status == 'placed') {
         placed = true
@@ -57,7 +57,7 @@ exports.viewMore = async function (req, res, next) {
         orderId = req.params.id
         let cancelled = false;
        
-        console.log("hi")
+        //console.log("hi")
         
         let orderData = await orderModel.findOne({ _id: orderId }).populate('products.productId').lean()
     console.log(orderData,"orderData")
@@ -89,9 +89,9 @@ exports.editOrderStatus = async function (req, res, next) {
 //.............................................................................................................//
 exports.getInvoice = async function(req,res,next){
 orderId=req.params.id
-console.log(orderId,"orderId")
+//console.log(orderId,"orderId")
     let invoiceData = await orderModel.findOne({ _id: orderId }).populate('products.productId').lean()
     
-    console.log(invoiceData,"invoicedata")
+   /// console.log(invoiceData,"invoicedata")
     res.render('invoice',{userLoggedIn, invoiceData})
 }

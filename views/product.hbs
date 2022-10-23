@@ -1,4 +1,4 @@
-<div class="row isotope-grid">
+<div class="row isotope-grid py-3">
 	{{#each products}}
 	<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{this.category.name}}">
 		<!-- Block2 -->
@@ -17,15 +17,17 @@
 					<a href="/product_detail/{{this._id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 						{{this.name}}
 					</a>
-					<div>
-						<s>
+					<div class="container" >
+						<div class="row d-flex">
+						<s class="" style="color:red ;">
 							<span class="stext-105 cl3">
-								{{this.price}}
+								₹ {{this.price}}
 							</span>
 						</s>
-						<span class="stext-105 cl3">
-							<p>New Price ₹{{this.sellingprice}} </p>
+						<span class="stext-105 cl3 ml-4">
+							<p >₹ {{this.sellingprice}} </p>
 						</span>
+					</div>
 					</div>
 
 

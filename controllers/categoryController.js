@@ -55,7 +55,7 @@ exports.DeleteCategory = async (req, res) => {
     try {
         await catg.findByIdAndDelete(req.params.id);
         res.redirect('/admin/viewCategory')
-        console.log(req.params.id)
+      //  console.log(req.params.id)
     }
     catch (error) {
         next(error)
@@ -69,7 +69,7 @@ exports.geteditCategory = async (req, res, next) => {
     try{
         let id = req.params.id;
         let data = await catg.findOne({ _id: id }).lean();
-        console.log("data", data)
+       // console.log("data", data)
         res.render('admin/edit_category', { layout: "adminLayout", admin: true, data })
     }
     catch(error){
@@ -81,8 +81,8 @@ exports.geteditCategory = async (req, res, next) => {
 exports.editCategory = async (req, res) => {
     try {
         let data = await catg.find().lean();
-        console.log(req.params.id)
-        console.log(req.body)
+       // console.log(req.params.id)
+        //console.log(req.body)
         const updateObject = await catg.findByIdAndUpdate(req.params.id, req.body);
         res.redirect('/admin/viewCategory')
     } catch (error) {

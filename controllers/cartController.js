@@ -16,7 +16,7 @@ exports.viewCart = async function (req, res, next) {
         let userLoggedIn = req.session.loggedIn
         const cart = await Cart.findOne({ userId: user_Id }).populate('products.productId').lean()
             
-        console.log(cart, 'cart');
+       // console.log(cart, 'cart');
         res.render('cart', { cart,userLoggedIn })
     }
     catch (error)
@@ -115,7 +115,7 @@ exports.removeProduct = async function (req, res) {
 
         const productId = req.body.product
 
-        console.log(productId, "productID");
+       // console.log(productId, "productID");
 
         const pullAmount = await Cart.findOne({ userId: userId, "products.productId": productId }).populate("products.productId").lean();
 

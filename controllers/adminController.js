@@ -43,7 +43,7 @@ exports.getAdminDashboard = async function (req, res, next) {
    
     const TotalRevenue = deliveredOrder.reduce((accr,crr)=>accr+crr.grandTotal,0)
  
-    const eachDaySale = await orderModel.aggregate([{$match:{status:"delivered"}},{$group: {_id: {day: {$dayOfMonth: "$createdAt"},month: {$month: "$createdAt"}, year:{$year: "$createdAt"}},total: {$sum: "$grandTotal"}}}]).sort({createdAt: -1})
+    const eachDaySale = await orderModel.aggregate([{$match:{status:"delivered"}},{$group: {_id: {day: {$dayOfMonth: "$createdAt"},month: {$month: "$createdAt"}, year:{$year: "$createdAt"}},total: {$sum: "$grandTotal"}}}]).sort({createdAt:-1})
 
     res.render('admin/dashboard', { layout: "adminLayout", admin: true, deliveredCount, shippedCount, cancelledCount, placedCount ,TotalRevenue,eachDaySale})
     }
@@ -105,7 +105,7 @@ exports.getAdminUsers = async function (req, res, next) {
 exports.blockUser = async function (req, res, next) {
 try{
     const userid = req.params.id
-    console.log(req.params.id)
+    //console.log(req.params.id)
     await User.findByIdAndUpdate(req.params.id, { $set: { status: false } })
     res.redirect('/admin/users')
 }catch (error){
@@ -139,9 +139,9 @@ exports.toLogout = function (req, res, next) {
 //................................................................................//
 
 exports.viewSalesReport =async function(req,res,next){
-    console.log("hiiiiiiiiiiiiii")
+   // console.log("hiiiiiiiiiiiiii")
     let data =await orderModel.find({status:"delivered"}).populate('products.productId' ).lean()
-    console.log(data,"1111")
+   // console.log(data,"1111")
     res.render('admin/salesReport',{layout:false,data})
 }
     
