@@ -5,7 +5,6 @@ const User = require('../model/usermodel');
 const product = require('../model/adminmodels/product');
 const Cart = require('../model/cartModel');
 const { response } = require('express');
-const total = require('../controllers/cartFunctions/subTotal');
 const { request } = require('http');
 const { totalmem } = require('os');
 const { findOne } = require('../model/usermodel');
