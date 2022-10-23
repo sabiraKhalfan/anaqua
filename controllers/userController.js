@@ -4,7 +4,7 @@ const User = require('./../model/usermodel')
 const Product = require('../model/adminmodels/product')
 const Cart = require('./../model/cartModel')
 const Wishlist = require('./../model/wishlistModel')
-const twilioControler = require('./../Controllers/twilioControler')
+const twilioControler = require('./../controllers/twilioControler')
 const categoryModel = require('./../model/adminmodels/add_category')
 
 
