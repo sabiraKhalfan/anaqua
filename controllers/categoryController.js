@@ -45,6 +45,7 @@ exports.getAdminCategory = async (req, res, next) => {
         res.render('admin/viewcategory', { layout: "adminLayout", admin: true, data })
     }
     catch (error) {
+        console.log(error)
         next(error)
     }
 
