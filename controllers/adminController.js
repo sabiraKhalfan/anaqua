@@ -43,7 +43,7 @@ exports.getAdminDashboard = async function (req, res, next) {
    
     const TotalRevenue = deliveredOrder.reduce((accr,crr)=>accr+crr.grandTotal,0)
  
-    const eachDaySale = await orderModel.aggregate([{$match:{status:"delivered"}},{$group: {_id: {day: {$dayOfMonth: "$createdAt"},month: {$month: "$createdAt"}, year:{$year: "$createdAt"}},total: {$sum: "$grandTotal"}}}]).sort({createdAt:-1})
+    const eachDaySale = await orderModel.aggregate([{$match:{status:"delivered"}},{$group: {_id: {day: {$dayOfMonth: "$createdAt"},month: {$month: "$createdAt"}, year:{$year: "$createdAt"}},total: {$sum: "$grandTotal"}}}]).sort({_id:1})
 
     res.render('admin/dashboard', { layout: "adminLayout", admin: true, deliveredCount, shippedCount, cancelledCount, placedCount ,TotalRevenue,eachDaySale})
     }
@@ -144,4 +144,7 @@ exports.viewSalesReport =async function(req,res,next){
    // console.log(data,"1111")
     res.render('admin/salesReport',{layout:false,data})
 }
-    
+//.................................................................................//
+exports.gotohome =async function (req,res,next){
+    res.redirect('/admin/dashboard')
+}

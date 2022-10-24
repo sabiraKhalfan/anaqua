@@ -47,24 +47,24 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="/admindashboard.html" class="navbar-brand mx-4 mb-3">
+                <a href="/admin/dashboard" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
-                    <div class="position-relative">
+                    {{!-- <div class="position-relative">
                         <img class="rounded-circle" src="/adminassets/img/user.jpg" alt=""
                             style="width: 40px; height: 40px;">
                         <div
                             class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="ms-3">
                         <h6 class="mb-0">Sabira</h6>
                         <span>Admin</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="/admin/dashboard" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-laptop me-2"></i>Category</a>
@@ -81,6 +81,25 @@
                         <a href="/admin/addproduct" class="dropdown-item">Add Products</a>
                         {{!-- <a href="element.html" class="dropdown-item">Other Elements</a> --}}
                     </div>
+                     <div class="nav-item dropdown">
+                            <a href="/admin/viewOrders" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                    class="fa fa-laptop me-2"></i>Orders</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="/admin/viewOrders" class="dropdown-item">View Orders</a>
+
+                                {{!-- <a href="element.html" class="dropdown-item">Other Elements</a> --}}
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="/admin/Coupon" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                    class="fa fa-laptop me-2"></i>Coupon</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="/admin/addCoupon" class="dropdown-item">Add Coupon</a>
+                                <a href="/admin/viewCoupon" class="dropdown-item">View Coupon</a>
+
+                                {{!-- <a href="element.html" class="dropdown-item">Other Elements</a> --}}
+                            </div>
+                        </div
                 </div>
 
                 {{!-- <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
@@ -112,9 +131,9 @@
             <a href="#" class="sidebar-toggler flex-shrink-0">
                 <i class="fa fa-bars"></i>
             </a>
-            <form class="d-none d-md-flex ms-4">
+            {{!-- <form class="d-none d-md-flex ms-4">
                 <input class="form-control bg-dark border-0" type="search" placeholder="Search">
-            </form>
+            </form> --}}
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -184,8 +203,8 @@
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="/adminassets/img/user.jpg" alt=""
-                            style="width: 40px; height: 40px;">
+                        {{!-- <img class="rounded-circle me-lg-2" src="/adminassets/img/user.jpg" alt=""
+                            style="width: 40px; height: 40px;"> --}}
                         <span class="d-none d-lg-inline-flex">Sabira</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
@@ -416,7 +435,7 @@
                         </div> --}}
                         <div class="col-12">
                             <div class="bg-secondary rounded h-100 p-4">
-                                <h6 class="mb-4">Responsive Table</h6>
+                                {{!-- <h6 class="mb-4">Responsive Table</h6> --}}
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead style="background-color:#ecf0f9 ; text-align: center;">

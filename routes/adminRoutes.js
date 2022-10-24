@@ -78,6 +78,7 @@ router.post('/editStatus/:id', auth.authAdmin, orderController.editOrderStatus)
 router.get('/viewCoupon', auth.authAdmin, couponController.couponData)
 router.get('/viewSalesReport',auth.authAdmin,adminController.viewSalesReport)
 
+router.get('/gotohome',auth.authAdmin,adminController.gotohome)
 router.use((req,res,next) => {
     next(createError(404))
 })
