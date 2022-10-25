@@ -60,7 +60,7 @@ exports.viewMore = async function (req, res, next) {
         //console.log("hi")
         
         let orderData = await orderModel.findOne({ _id: orderId }).populate('products.productId').lean()
-    console.log(orderData,"orderData")
+    //console.log(orderData,"orderData")
         if (orderData.status == 'cancelled') {
             cancelled = true
         }

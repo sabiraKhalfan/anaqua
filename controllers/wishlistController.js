@@ -15,7 +15,7 @@ module.exports = {
         const userId = req.session.userId
         try {
             wishlistDatas = await Wishlist.find({ userId: userId }).populate('products.productId').lean()
-            console.log( wishlistDatas,"wisglistsatassssssssssssssss")
+            //console.log( wishlistDatas,"wisglistsatassssssssssssssss")
 
             res.render('wishlist', { wishlistDatas})
 
@@ -30,9 +30,7 @@ module.exports = {
     addWishlist: async (req, res) => {
 
 
-        // if (!req.session.loggedIn) {
-        //     return res.json({ logged: false })
-        // }
+        
 
 
         try {
@@ -66,7 +64,7 @@ module.exports = {
 
 
         } catch (error) {
-            console.log(error)
+            next(error)
         }
 
 
@@ -76,7 +74,7 @@ module.exports = {
 
         const productId = req.body.prodId
 
-        console.log("hi from delete", productId)
+       // console.log("hi from delete", productId)
         deletes = await Wishlist.updateOne({ userId: req.session.userId }, { $pull: { products: { productId: req.body.prodId } } })
         res.json({})
     }

@@ -45,7 +45,7 @@ exports.getAdminCategory = async (req, res, next) => {
         res.render('admin/viewCategory', { layout: "adminLayout", admin: true, data })
     }
     catch (error) {
-        console.log(error)
+      
         next(error)
     }
 
@@ -82,8 +82,7 @@ exports.geteditCategory = async (req, res, next) => {
 exports.editCategory = async (req, res) => {
     try {
         let data = await catg.find().lean();
-       // console.log(req.params.id)
-        //console.log(req.body)
+       
         const updateObject = await catg.findByIdAndUpdate(req.params.id, req.body);
         res.redirect('/admin/viewCategory')
     } catch (error) {

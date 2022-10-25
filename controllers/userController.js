@@ -86,7 +86,7 @@ exports.createUser = async (req, res) => {
       res.redirect('/otp')
 
 
-      console.log(req.body, "otp")
+      //console.log(req.body, "otp")
     }
 
 

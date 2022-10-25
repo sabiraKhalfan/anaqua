@@ -103,7 +103,7 @@ exports.updateCoupon = async function (req, res, next) {
     }
 
     catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 
@@ -114,7 +114,7 @@ exports.deleteCoupon = async function (req, res, next) {
         res.redirect('/admin/dashboard')
     }
     catch (error) {
-        console.log(error)
+        next(error)
     }
 
 }

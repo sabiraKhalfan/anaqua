@@ -333,7 +333,7 @@
                 address
             }
         }).then(function (response) {
-            console.log(response.data)
+            
             let razorpay = response.data
             if (response.data.status == 'COD') {
                 location.replace("/orderConfirmation")
@@ -423,7 +423,7 @@
 
         //totalAmount = document.getElementById('totalAmount').textContent
         couponId = document.getElementById('couponID').value
-        console.log(total, couponId)
+        
         axios({
             url: '/couponValidation',
             method: 'post',
@@ -433,8 +433,8 @@
             }
         })
             .then(function (response) {
-                console.log(response);
-                console.log(response.data.discountAmount)
+                
+            
 
 
                 if (response.data.message == 'The coupon is used already') {

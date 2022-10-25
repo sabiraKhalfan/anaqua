@@ -63,15 +63,14 @@ exports.updatepwd = async function (req, res, next) {
     try {
         let userId = req.session.userId
         oldpwd = req.body.password
-       // console.log(userId, "session")
-        //console.log(oldpwd, "oldpwd")
+      
         let userData = await User.findOne({ _id: req.session.userId })
-        //console.log(userData, "user")
+     
         let correct = await bcrypt.compare(req.body.password, userData.password)
-        //console.log(correct, "comparepassword")
+        
         if (correct == true) {
             let newpassword = await bcrypt.hash(req.body.password, 10)
-            //console.log(newpassword, "newpwd")
+           
             await User.updateOne({ _id: userId }, { $set: { 'password': newpassword } })
         } else {
             console.log("incorrect ")

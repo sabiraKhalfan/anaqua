@@ -203,7 +203,7 @@
         function editname(userId) {
 
             let name = document.getElementById('name').value;
-            console.log(name)
+         
             axios.post('/updateDetails',
                 {
                     name: name
@@ -221,7 +221,7 @@
 
         function updatepwd(userId) {
             let pwd = document.getElementById('oldpwd').value;
-            console.log(pwd)
+       
             axios.post('/updatepwd', {
                 password: pwd
             }).then(function (response) {

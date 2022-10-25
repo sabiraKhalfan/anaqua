@@ -122,8 +122,7 @@ exports.verifyPay = async function (req, res, next) {
         const expectedSignature = crypto.createHmac('sha256', process.env.RAZOR_PAY_SECRET_KEY)
             .update(body.toString())
             .digest('hex');
-        //console.log("sig received ", req.body.response.razorpay_signature);
-       // console.log("sig generated ", expectedSignature);
+       
         var response = { "signatureIsValid": "false" }
         if (expectedSignature === req.body.response.razorpay_signature) {
             response = { "signatureIsValid": "true" }
@@ -145,7 +144,7 @@ exports.getCoD = async function (req, res, next) {
         const userId = req.session.userId
         const orderdata = req.session.confirmationData
       
-    
+    //console.log(orderdata)
         res.render('orderConfirmation', { userLoggedIn, orderdata })
     }catch(error){
         next(error)

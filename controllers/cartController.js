@@ -46,7 +46,7 @@ exports.viewShop = async function (req, res, next) {
 exports.addTocart = async function (req, res) {
     try {
         // console.log(req.session);
-        console.log(req.body, "requestbody")
+       // console.log(req.body, "requestbody")
         let user_Id = req.session.userId;
         const productId = req.body.productId;
         const oldprod = await product.findById(productId)
@@ -70,7 +70,7 @@ exports.addTocart = async function (req, res) {
 
                     const cart = await Cart.updateOne({ 'products.productId': productId }, { '$inc': { 'products.$.quantity': req.body.quantity, 'products.$.total': total } })
                     await Cart.findByIdAndUpdate(oldCart._id, { $inc: { grandTotal: total } })
-                    console.log(cart)
+                   // console.log(cart)
                 }
 
 
