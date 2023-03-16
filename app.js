@@ -90,7 +90,7 @@ app.use(function (err, req, res, next) {
 });
 
 //console.log(process.env)
-const port = 5000;
+const port = 8000;
 app.listen(port, () => {
 
   console.log('Server is runing on port 5000')
