@@ -22,7 +22,7 @@
                         <th>Date</th>
                         <th>User</th>
                         <th>Products</th>
-                        <th>Qty</th>
+                        {{!-- <th>Qty</th> --}}
                         <th>Payment method</th>
                         <th>TotalPrice</th>
                         {{!-- <th> Total revenue</th> --}}
@@ -32,10 +32,10 @@
                     {{#each data}}
                     <tr>
                         <td>{{formatString this.createdAt}}</td>
-                        <td>{{this.billingAddress.firstName}}</td>
+                        <td>{{this.billingAddress.firstName}} </td>
                         <td>{{#each this.products}}{{this.productId.name}}<br>
                             {{/each}}</td>
-                        <td>{{#each this.products}}{{this.quantity}}<br>{{/each}}</td>
+                         <td>{{#each this.products}}{{this.quantity}}<br>{{/each}}</td> 
                      
                         <td>{{this.paymentMethod}}</td>
                            <td>{{this.grandTotal}}</td>
